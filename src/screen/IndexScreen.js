@@ -1,22 +1,27 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import BlogContext from '../context/BlogContext';
-import { FlatList } from 'react-native-gesture-handler';
+import { Context as BlogContext } from '../context/BlogContext';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import { FontAwesome } from '@expo/vector-icons'
 
 const IndexScreen = () => {
 
-    const { data, addBlogPost } = useContext(BlogContext);
+    const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
 
     return (
         <View>
-            <Text>Index Screen</Text>
             <Button title="Add Post" onPress={addBlogPost} />
             <FlatList
-                data={data} //???
+                data={state} //???
+                // style={styles.flatList}
                 keyExtractor={blogPost => blogPost.title}
                 renderItem={({ item }) => {
-                    return (
+                    return (<View style={styles.row}>
                         <Text style={styles.text}>{item.title}</Text>
+                        <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                            <FontAwesome name="trash" style={styles.icon} />
+                        </TouchableOpacity>
+                    </View>
                     )
                 }}
             />
@@ -26,7 +31,21 @@ const IndexScreen = () => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 25
+        fontSize: 20
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        borderBottomWidth: 1,
+        borderColor: 'gray'
+    },
+    icon: {
+        fontSize: 24
+    },
+    flatList: {
+        marginVertical: 10
     }
 })
 
