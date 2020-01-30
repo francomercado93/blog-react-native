@@ -4,7 +4,7 @@ import { Context as BlogContext } from '../context/BlogContext';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons'
 
-const IndexScreen = () => {
+const IndexScreen = ({ navigation }) => {
 
     const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
 
@@ -16,17 +16,29 @@ const IndexScreen = () => {
                 // style={styles.flatList}
                 keyExtractor={blogPost => blogPost.title}
                 renderItem={({ item }) => {
-                    return (<View style={styles.row}>
-                        <Text style={styles.text}>{item.title}</Text>
-                        <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                            <FontAwesome name="trash" style={styles.icon} />
+                    return (
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Show', { id: item.id })}>
+                            <View style={styles.row}>
+                                <Text style={styles.text}>{item.title}</Text>
+                                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                                    <FontAwesome name="trash" style={styles.icon} />
+                                </TouchableOpacity>
+                            </View>
                         </TouchableOpacity>
-                    </View>
                     )
                 }}
             />
         </View>
     )
+}
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+            <FontAwesome name="plus" size={30} />
+        </TouchableOpacity>
+    }
 }
 
 const styles = StyleSheet.create({
@@ -45,7 +57,11 @@ const styles = StyleSheet.create({
         fontSize: 24
     },
     flatList: {
-        marginVertical: 10
+        marginVertical: 10,
+    },
+    buttonHeader: {
+        fontSize: 30,
+        marginRight: 20
     }
 })
 
