@@ -5,7 +5,11 @@ const blogPostsReducer = (state, action) => {
         case 'delete_blogpost':
             return state.filter(blogpost => blogpost.id !== action.payload);
         case 'add_blogpost':
-            return [...state, { id: state.length + 1, title: `Blog Post #${state.length + 1}` }];
+            return [...state, {
+                id: state.length + 1,
+                title: action.payload.title,
+                content: action.payload.content
+            }];
         default:
             return state;
     }
@@ -13,8 +17,8 @@ const blogPostsReducer = (state, action) => {
 
 const addBlogPost = dispatch => {
     // Devuelve una funcion
-    return () => {
-        dispatch({ type: 'add_blogpost' });
+    return (title, content) => {
+        dispatch({ type: 'add_blogpost', payload: { title, content } });
     }
 }
 

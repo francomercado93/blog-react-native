@@ -11,6 +11,7 @@ const ShowScreen = ({ navigation }) => {
     return (
         <View style={styles.blogContent}>
             <Text style={styles.textTitle}>{blogPost.title}</Text>
+            <Text style={styles.textContent}>{blogPost.content}</Text>
         </View>
     )
 }
@@ -19,13 +20,18 @@ const styles = StyleSheet.create({
 
     textTitle: {
         fontSize: 25,
-        margin: 10
+        margin: 10,
+        fontWeight: 'bold'
     },
     blogContent: {
         borderColor: 'black',
         borderWidth: 1,
         height: 400,
         marginVertical: 20
+    },
+    textContent: {
+        fontSize: 16,
+        margin: 10
     }
 })
 

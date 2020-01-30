@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import React, { useContext, useState } from 'react';
+import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Context as BlogContext } from '../context/BlogContext';
 
 const CreateScreen = ({ navigation }) => {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const { addBlogPost } = useContext(BlogContext);
 
     return (
-        <View style={styles.form}>
+        <View>
             <Text style={styles.label}>Enter title:</Text>
-            <TextInput style={styles.input} value={title} onChange={text => setTitle(text)} />
+            <TextInput
+                id="title"
+                style={styles.input}
+                value={title}
+                onChangeText={(text) => { setTitle(text) }}
+            />
             <Text style={styles.label}>Enter content:</Text>
-            <TextInput style={styles.input} value={content} onChange={text => setContent(text)} />
-            <Button style={styles.addButton} title="Add Blog Post" />
+            <TextInput
+                id="content"
+                style={styles.input}
+                value={content}
+                onChangeText={text => setContent(text)}
+            />
+            <Button
+                style={styles.addButton}
+                title="Add Blog Post"
+                onPress={() => addBlogPost(title, content)}
+            />
         </View>
     )
 }
