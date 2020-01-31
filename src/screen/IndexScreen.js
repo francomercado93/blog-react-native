@@ -10,7 +10,6 @@ const IndexScreen = ({ navigation }) => {
 
     return (
         <View>
-            <Button title="Add Post" onPress={addBlogPost} />
             <FlatList
                 data={state} //???
                 // style={styles.flatList}

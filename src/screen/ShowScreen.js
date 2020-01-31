@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { FontAwesome } from '@expo/vector-icons'
 
 const ShowScreen = ({ navigation }) => {
 
@@ -14,6 +16,14 @@ const ShowScreen = ({ navigation }) => {
             <Text style={styles.textContent}>{blogPost.content}</Text>
         </View>
     )
+}
+
+ShowScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: <TouchableOpacity onPress={() => navigation.navigate('Edit', { id: navigation.getParam('id') })}>
+            <FontAwesome name="pencil" size={35} />
+        </TouchableOpacity>
+    }
 }
 
 const styles = StyleSheet.create({
