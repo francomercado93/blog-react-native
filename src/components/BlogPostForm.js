@@ -9,23 +9,24 @@ const BlogPostForm = ({ onSubmit, initialValues }) => {
     const [content, setContent] = useState(initialValues.content);
 
     return (
-        <View>
-            <Text style={styles.label}>Enter title:</Text>
-            <TextInput
-                id="title"
-                style={styles.input}
-                value={title}
-                onChangeText={(text) => { setTitle(text) }}
-            />
-            <Text style={styles.label}>Enter content:</Text>
-            <TextInput
-                id="content"
-                style={styles.input}
-                value={content}
-                onChangeText={text => setContent(text)}
-            />
+        <View style={{ margin: 20 }}>
+            <View>
+                <Text style={styles.label}>Enter title:</Text>
+                <TextInput
+                    id="title"
+                    style={styles.input}
+                    value={title}
+                    onChangeText={(text) => { setTitle(text) }}
+                />
+                <Text style={styles.label}>Enter content:</Text>
+                <TextInput
+                    id="content"
+                    style={styles.input}
+                    value={content}
+                    onChangeText={text => setContent(text)}
+                />
+            </View>
             <Button
-                style={styles.addButton}
                 title="Save Blog Post"
                 onPress={() => onSubmit(title, content)}
             />
@@ -54,9 +55,6 @@ const styles = StyleSheet.create({
     },
     form: {
         margin: 10
-    },
-    addButton: {
-        paddingTop: 10
     }
 })
 

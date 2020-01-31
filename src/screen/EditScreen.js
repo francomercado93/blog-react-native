@@ -21,7 +21,11 @@ const EditScreen = ({ navigation }) => {
             }}
         />)
 }
-
+EditScreen.navigationOptions = () => {
+    return {
+        title: 'Editar post'
+    }
+}
 const styles = StyleSheet.create({})
 
 export default EditScreen;

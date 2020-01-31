@@ -7,10 +7,18 @@ const CreateScreen = ({ navigation }) => {
 
     const { addBlogPost } = useContext(BlogContext);
 
-    return (<BlogPostForm
-        onSubmit={(title, content) => {
-            addBlogPost(title, content, () => navigation.navigate('Index'))
-        }} />)
+    return (
+        <BlogPostForm
+            onSubmit={(title, content) => {
+                addBlogPost(title, content, () => navigation.navigate('Index'))
+            }}
+        />)
+}
+
+CreateScreen.navigationOptions = () => {
+    return {
+        title: 'Crear nuevo blog'
+    }
 }
 
 const styles = StyleSheet.create({})
