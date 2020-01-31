@@ -1,7 +1,10 @@
 import createDataContext from "./createDataContext";
+import jsonServer from '../api/jsonServer';
 
 const blogPostsReducer = (state, action) => {
     switch (action.type) {
+        case 'get_blogpost':
+            return action.payload
         case 'edit_blogpost':
             return state.map(blogPost => {
                 // Si el id coincide con el que recibe la funcion se modificar el objeto del array,
@@ -24,6 +27,12 @@ const blogPostsReducer = (state, action) => {
     }
 };
 
+const getBlogPosts = dispatch => {
+    return async () => {
+        const response = await jsonServer.get('/blogposts')
+        dispatch({ type: 'get_blogposts', payload: response.data })
+    }
+}
 const addBlogPost = dispatch => {
     // Devuelve una funcion
     return (title, content, callback) => {
@@ -52,6 +61,6 @@ const editBlogPost = dispatch => {
 
 export const { Context, Provider } = createDataContext(
     blogPostsReducer,
-    { addBlogPost, deleteBlogPost, editBlogPost },
-    [{ title: 'Test Post', content: 'Test Content', id: 1 }]
+    { addBlogPost, deleteBlogPost, editBlogPost, getBlogPosts },
+    []
 ); 
