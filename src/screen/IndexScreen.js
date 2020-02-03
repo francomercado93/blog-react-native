@@ -1,8 +1,8 @@
+import { FontAwesome } from '@expo/vector-icons';
 import React, { useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { Context as BlogContext } from '../context/BlogContext';
+import { StyleSheet, Text, View } from 'react-native';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
-import { FontAwesome } from '@expo/vector-icons'
+import { Context as BlogContext } from '../context/BlogContext';
 
 const IndexScreen = ({ navigation }) => {
 
@@ -11,8 +11,6 @@ const IndexScreen = ({ navigation }) => {
     useEffect(() => {
         getBlogPosts()
     }, []);
-
-    console.log(state);
 
     return (
         <View>
