@@ -4,7 +4,6 @@ import jsonServer from '../api/jsonServer';
 const blogPostsReducer = (state, action) => {
     switch (action.type) {
         case 'get_blogposts':
-            console.log(action.payload);
             return action.payload
         case 'edit_blogpost':
             return state.map(blogPost => {
@@ -14,15 +13,15 @@ const blogPostsReducer = (state, action) => {
             })
         case 'delete_blogpost':
             return state.filter(blogpost => blogpost.id !== action.payload);
-        case 'add_blogpost':
-            return [
-                ...state,
-                {
-                    id: state.length + 1,
-                    title: action.payload.title,
-                    content: action.payload.content
-                }
-            ];
+        // case 'add_blogpost':
+        //     return [
+        //         ...state,
+        //         {
+        //             id: state.length + 1,
+        //             title: action.payload.title,
+        //             content: action.payload.content
+        //         }
+        //     ];
         default:
             return state;
     }
@@ -41,8 +40,10 @@ const getBlogPosts = dispatch => {
 
 const addBlogPost = dispatch => {
     // Devuelve una funcion
-    return (title, content, callback) => {
-        dispatch({ type: 'add_blogpost', payload: { title, content } });
+    return async (title, content, callback) => {
+        await jsonServer.post('/blogposts', { title, content });
+        // Se lo puede eliminar , no se usa mas porque la IndexScreen hace el pedido get cada vez que se muestra la pantalla
+        // dispatch({ type: 'add_blogpost', payload: response.data });
         if (callback) {
             callback();
         }
@@ -50,8 +51,9 @@ const addBlogPost = dispatch => {
 }
 
 const deleteBlogPost = dispatch => {
-    return (id) => {
-        dispatch({ type: 'delete_blogpost', payload: id });
+    return async (id) => {
+        await jsonServer.delete(`/blogposts/${id}`)
+        // dispatch({ type: 'delete_blogpost', payload: id });
     }
 }
 

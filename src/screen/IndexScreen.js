@@ -9,7 +9,17 @@ const IndexScreen = ({ navigation }) => {
     const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext);
 
     useEffect(() => {
-        getBlogPosts()
+        getBlogPosts();
+
+        // Cada vez que volvemos a esta pantalla hacemos el llamado a la funcion 
+        // getBlogPosts() para obtener la lista actualizada de posts
+        const listener = navigation.addListener('didFocus', () => {
+            getBlogPosts();
+        });
+
+        return () => {
+            listener.remove();
+        }
     }, []);
 
     return (
@@ -17,6 +27,7 @@ const IndexScreen = ({ navigation }) => {
             <FlatList
                 data={state} //???
                 // style={styles.flatList}
+                // keyExtractor={blogPost => blogPost.id} id es un numero y keyExtractor tiene que ser de tipo string
                 keyExtractor={blogPost => blogPost.title}
                 renderItem={({ item }) => {
                     return (
